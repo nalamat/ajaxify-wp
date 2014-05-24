@@ -22,9 +22,9 @@ add_filter( 'template_include', 'ajaxify_wp_template' );
 
 function ajaxify_wp_head()
 {
-	wp_enqueue_style ( 'ajaxify', plugins_url( 'ajaxify.css', __FILE__) );
-	wp_enqueue_script( 'jquery' , plugins_url( 'jquery.js' , __FILE__ ) );
-	wp_enqueue_script( 'ajaxify', plugins_url( 'ajaxify.js', __FILE__ ) );
+	wp_enqueue_style ( 'ajaxify', plugins_url( 'ajaxify.css', __FILE__ ) );
+	wp_enqueue_script( 'jquery' , plugins_url( 'jquery.js'  , __FILE__ ) );
+	wp_enqueue_script( 'ajaxify', plugins_url( 'ajaxify.js' , __FILE__ ) );
 }
 
 function ajaxify_wp_footer()
