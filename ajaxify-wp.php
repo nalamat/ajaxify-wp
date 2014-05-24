@@ -15,24 +15,24 @@
 // 'before_wp_head' is not a WordPress action, it must be
 // added before wp_head() call in theme's header.php
 // TODO: is this necessary? investigate and fix
-add_action( 'before_wp_head', 'ajaxify_head' );
-add_action( 'wp_footer', 'ajaxify_footer' );
-add_filter( 'the_content', 'ajaxify_content' );
-add_filter( 'template_include', 'ajaxify_template' );
+add_action( 'before_wp_head', 'ajaxify_wp_head' );
+add_action( 'wp_footer', 'ajaxify_wp_footer' );
+add_filter( 'the_content', 'ajaxify_wp_content' );
+add_filter( 'template_include', 'ajaxify_wp_template' );
 
-function ajaxify_head()
+function ajaxify_wp_head()
 {
 	wp_enqueue_style( 'ajaxify', plugins_url( 'ajaxify.css', __FILE__) );
 	wp_enqueue_script( 'jquery', plugins_url( 'jquery.js', __FILE__ ) );
 	wp_enqueue_script( 'ajaxify', plugins_url( 'ajaxify.js', __FILE__ ) );
 }
 
-function ajaxify_footer()
+function ajaxify_wp_footer()
 {
-	echo '<div id="ajaxify_load"><img src="'.plugins_url( 'load.gif', __FILE__).'"></div>'."\n";
+	echo '<div id="ajaxify_wp_load"><img src="'.plugins_url( 'load.gif', __FILE__).'"></div>'."\n";
 }
 
-function ajaxify_content( $content ) {
+function ajaxify_wp_content( $content ) {
 	$c = $content;
 	if ( substr($c, 0, 3) == "<p>" )$c = substr($c, 3);
 	if ( substr($c, strlen($c)-5, 4) == "</p>" ) $c = substr($c, 0, strlen($c)-5);
@@ -42,7 +42,7 @@ function ajaxify_content( $content ) {
 	return null;
 }
 
-function ajaxify_template( $template )
+function ajaxify_wp_template( $template )
 {
 	if ( !$template || is_null($_GET["ajax"]) ) return $template;
 	global $post;
@@ -65,7 +65,7 @@ function ajaxify_template( $template )
 	return null;
 }
 
-function ajaxify_include($filename) {
+function ajaxify_wp_include($filename) {
 	if ( is_file($filename) ) {
 		ob_start();
 		include $filename;
